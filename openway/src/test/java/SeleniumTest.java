@@ -47,23 +47,23 @@ public class SeleniumTest {
         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("preloader")));
         webDriver.findElement(By.xpath("//body/section[1]/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/a[1]")).click();
 
-        WebElement bookPrice = webDriver.findElement(By.xpath("//span[@class='special' and contains(text(), 'Rp 505,000')]"));
-
         /*Adding to cart*/
         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("preloader")));
         webDriver.findElement(By.xpath("//button[contains(text(),'Add to Cart')]")).click();
 
-//        WebElement cartQuantity = webDriver.findElement(By.xpath("//span[@id='cart_total_mobile']"));
-//        String cartQuantityString = cartQuantity.getText();
-//        Assert.assertEquals(cartQuantityString, "1");
-
         /*Checking the cart*/
-        webDriver.findElement(By.xpath("//header/div[2]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/a[1]")).click();
-        WebElement cartPrice = webDriver.findElement(By.xpath("//span[@id='sub_total']"));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("Notification-Modal")));
+        webDriver.findElement(By.xpath("//body/div[@id='notification-modal-header']/div[@id='Notification-Modal']/div[1]/div[1]/div[1]/div[1]/button[1]/i[1]")).click();
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//header/div[2]/div[1]/div[1]/div[3]/div[1]/div[2]/a[1]"))).click();
 
-        String bookPriceString = bookPrice.getText();
+        WebElement cartQuantity = webDriver.findElement(By.xpath("//span[@id='cart_total']"));
+        String cartQuantityString = cartQuantity.getText();
+        Assert.assertEquals(cartQuantityString, "1");
+
+
+        WebElement cartPrice = webDriver.findElement(By.xpath("//span[@id='sub_total']"));
         String cartPriceString = cartPrice.getText();
-        Assert.assertEquals(bookPriceString, cartPriceString);
+        Assert.assertEquals(cartPriceString, "Rp 505,000");
 
         webDriver.close();
     }
